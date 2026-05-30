@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ratnesh Tiwari – Writing Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1814;
+    --ink-soft: #4a4740;
+    --ink-muted: #8a8780;
+    --paper: #faf8f4;
+    --paper-warm: #f2ede4;
+    --accent: #b5421a;
+    --accent-light: #f5ece8;
+    --border: #e0d8cc;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.6; font-size: 16px; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,248,244,0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-name { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+  .hero-tag { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 2px; margin-bottom: 1.5rem; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.6rem); line-height: 1.15; font-weight: 400; color: var(--ink); margin-bottom: 1.25rem; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-bio { font-size: 1.05rem; color: var(--ink-soft); line-height: 1.75; max-width: 560px; margin-bottom: 2rem; font-weight: 300; }
+  .hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.82rem; color: var(--ink-muted); }
+  .hero-meta strong { color: var(--ink-soft); font-weight: 500; }
+
+  section { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 2.5rem; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .featured-article { background: var(--paper-warm); border: 1px solid var(--border); border-radius: 4px; padding: 2.5rem; margin-bottom: 1rem; }
+  .article-tag { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; color: var(--accent); margin-bottom: 1rem; }
+  .article-title { font-family: var(--serif); font-size: 1.9rem; font-weight: 400; line-height: 1.25; color: var(--ink); margin-bottom: 1rem; }
+  .article-excerpt { font-size: 1rem; color: var(--ink-soft); line-height: 1.8; font-weight: 300; border-left: 3px solid var(--accent); padding-left: 1.25rem; margin: 1.25rem 0; font-style: italic; font-family: var(--serif); }
+  .article-body { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.85; font-weight: 300; }
+  .article-body p + p { margin-top: 1rem; }
+  .read-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 1.5rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); cursor: pointer; border: none; background: none; padding: 0; transition: gap 0.2s; }
+  .read-more:hover { gap: 10px; }
+  .hidden-text { display: none; }
+  .hidden-text.open { display: block; margin-top: 1rem; }
+
+  .article-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 580px) { .article-grid { grid-template-columns: 1fr; } }
+  .article-card { border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; background: var(--paper); transition: border-color 0.2s, background 0.2s; }
+  .article-card:hover { border-color: var(--accent); background: var(--accent-light); }
+  .card-tag { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; color: var(--ink-muted); margin-bottom: 0.75rem; }
+  .card-title { font-family: var(--serif); font-size: 1.15rem; line-height: 1.35; color: var(--ink); margin-bottom: 0.75rem; }
+  .card-snippet { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.7; font-weight: 300; }
+
+  .series-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 580px) { .series-grid { grid-template-columns: 1fr; } }
+  .series-card { border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1.5rem; background: var(--paper); display: flex; flex-direction: column; }
+  .series-name { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .series-title { font-family: var(--serif); font-size: 1rem; color: var(--ink); margin-bottom: 0.6rem; line-height: 1.35; }
+  .series-body { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.75; font-weight: 300; flex: 1; }
+  .series-card blockquote { border-left: 2px solid var(--border); padding-left: 0.75rem; margin-top: 0.75rem; font-style: italic; font-size: 0.85rem; color: var(--ink-muted); font-family: var(--serif); }
+  .series-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 1rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: gap 0.2s; }
+  .series-link:hover { gap: 9px; }
+
+  .contact-section { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+  .contact-section p { font-size: 1rem; color: var(--ink-soft); font-weight: 300; margin-bottom: 1.5rem; line-height: 1.8; }
+  .contact-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .contact-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 20px; border: 1px solid var(--border); border-radius: 2px; font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; letter-spacing: 0.04em; transition: border-color 0.2s, color 0.2s; }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link.primary { background: var(--accent); border-color: var(--accent); color: white; }
+  .contact-link.primary:hover { background: #9a3515; border-color: #9a3515; color: white; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-name">Ratnesh Tiwari</a>
+  <ul class="nav-links">
+    <li><a href="#essays">Essays</a></li>
+    <li><a href="#opinions">Opinion</a></li>
+    <li><a href="#series">Series</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Writing Portfolio</div>
+  <h1>Words that make<br>people <em>feel</em> something.</h1>
+  <p class="hero-bio">Second-year student at NSUT Delhi. I write long-form essays, opinion pieces, and content series. My work appears in The Alliance — NSUT's newspaper society — across magazine editions, social campaigns, and recurring series.</p>
+  <div class="hero-meta">
+    <span><strong>Based in</strong> Delhi, India</span>
+    <span><strong>Currently</strong> Content Writer, The Alliance NSUT</span>
+    <span><strong>Also</strong> PR Team, Ashwamedh NSUT</span>
+  </div>
+</div>
+
+<section id="essays">
+  <div class="section-label">Featured essay</div>
+  <div class="featured-article">
+    <div class="article-tag">Personal Essay · Memory & Place</div>
+    <h2 class="article-title">Nani ka Ghar</h2>
+    <div class="article-excerpt">"There's a house I still visit, not on any map, but hidden in the hush of memory. I can smell it if I sit still long enough."</div>
+    <div class="article-body">
+      <p>A warm mix of roasted jeera, old wood softened by time, and something sweet bubbling on the stove. The ceiling fan creaked in lazy circles above, its tired rhythm drowned in the quiet chatter of cousins sprawled across cool marble floors, limbs tangled, laughter spilling out like we had all the time in the world.</p>
+      <p>What does it remind you of? If your answer is Nani ka ghar, now pause. Imagine a world where it never existed. A world where stories have no kitchen to echo in. Where smells don't carry memories, only recipes, and laughter doesn't linger in the corners of rooms passed down through generations, but scrolls past on a screen.</p>
+    </div>
+    <button class="read-more" onclick="toggleArticle(this)">Read full essay →</button>
+    <div class="hidden-text">
+      <div class="article-body">
+        <p>What does that world feel like? Like trying to hold warmth in a zipped folder. Like childhood without a witness. Like remembering something you were never taught to miss. Just spaces that hold things, not feelings. Moments without roots. Memories without place.</p>
+        <p>I remember the river near my Nani's house, calm, wide, and patient. Beyond it stood the temples, quiet and familiar, like old companions that had watched generations come and go. Nana moved through the temple with the ease of someone who had spent a lifetime there. Every folded hand, every bow of the head felt practised yet effortless.</p>
+        <p>My mother's stories begin even earlier. Her voice lifts as she speaks of school paths that stretched for miles, of rabbits that tunnelled into the backyard, and stray dogs that followed her home. She always grins when she talks about how much her grandparents adored her. And then, with a smirk so soft it is gone almost as soon as it appears, she says my childhood can't really compete. She's teasing, but maybe she's not wrong.</p>
+        <p>It was the kind of place where festivals felt alive. Rangoli was smudged by running feet, hands stayed stained with haldi for days, and stories drifted through the house long after the celebrations ended.</p>
+        <p>Then one day, it was gone.</p>
+        <p>I still remember when they sold the house. My grandparents were growing older, and the village couldn't care for them the way a city hospital could. It was a practical decision, necessary even. But to me, it felt like someone had uprooted a tree I thought would outlive us all.</p>
+        <p>How do you sell something that raised you? Something that held your childhood in its walls?</p>
+        <p>Maybe it wasn't easy for them either. That house wasn't just built with bricks. It was built with years of saving and planning, with routines that turned into rituals, and with a quiet kind of love that settled into the corners like sunlight. And maybe some homes are meant to be carried, not kept.</p>
+        <p>Now, summers are booked with coding camps, and childhoods flicker under the glow of iPads. Family reunions play out in restaurants that are too loud for real conversation and too quick for real connection. We have more ways than ever to preserve information. Yet the things that made those traditions feel alive were rarely the things anyone thought to save.</p>
+        <p>The house is gone now. But it did what it was meant to do. It brought people together, held them there for a while, and left them with something worth carrying long after they had gone their separate ways.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="opinions">
+  <div class="section-label">Opinion & long-form</div>
+  <div class="article-grid">
+
+    <div class="article-card">
+      <div class="card-tag">Political Essay · Democracy</div>
+      <h3 class="card-title">The Question of Indian Democracy</h3>
+      <p class="card-snippet">On India's decline across democratic metrics according to the V-Dem Democracy Report 2024 — and what it means for a country that has always defined itself by its diversity and constitutional promise.</p>
+      <button class="read-more" style="margin-top:1rem;" onclick="toggleArticle(this)">Read essay →</button>
+      <div class="hidden-text">
+        <div class="article-body" style="margin-top:1rem;">
+          <p>The state of democracy in India is something that affects me. I love my country, and seeing where things are headed makes me worried and sometimes scared. The recent Democracy Report 2024 by the V-Dem Institute is just proving the point I have been trying to make for years now. They're saying India, which was already downgraded to an 'electoral autocracy' in 2018, has sunk even further and is now one of the worst autocracies out there.</p>
+          <p>India has always been a symbol of how a diversity of such a large scale can come together and function as a democracy. The Constitution has always dictated the ideal path, guiding us with its promises of freedom, equality, and justice. But let us not kid ourselves — we have wandered from this path before, and Indians have shown their resilience in finding it again.</p>
+          <p>The 2024 Report highlighted serious issues: power concentrated at the top, dissent being crushed, the press barely more than a joke, and minorities being pushed to the sidelines. And it all came to a head in the 2024 Lok Sabha elections.</p>
+          <p>The BJP won again, but it wasn't exactly a clean win. They had to cobble together a coalition to make it happen, and the message from the people was clear: we're done with the tyranny. People are tired of the power games, the bullying of anyone who dares to speak up, and the framing of basic rights as anti-national sentiment.</p>
+          <p>Nowadays, if you speak out against the government, you're either unpatriotic or just plain mad. Journalists, activists, and opposition leaders are all feeling the heat. A normal citizen thinks twice about expressing opinions — and that is not a country where democracy is in power.</p>
+          <p>Then there's the treatment of minorities. The growing attitude of "us vs. them" has become normalised in ways that are tearing the country apart. Policies like the CAA and the proposed NRC have sparked protests precisely because they feel designed to exclude.</p>
+          <p>India's democracy is at a crossroads. But I believe in this country and my countrymen, and I have strong hope that we will make sure India reclaims the democratic glory its freedom fighters intended.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="card-tag">Personal Essay · Family & Politics</div>
+      <h3 class="card-title">A Letter to My Orthodox Brahmin Family</h3>
+      <p class="card-snippet">After three years of trying in conversation, a letter asking family to look beyond blind political faith — written with honesty, not hostility, and grounded in data most people prefer to ignore.</p>
+      <button class="read-more" style="margin-top:1rem;" onclick="toggleArticle(this)">Read letter →</button>
+      <div class="hidden-text">
+        <div class="article-body" style="margin-top:1rem;">
+          <p>Dear Family, this might seem a bit extreme, but after three years of trying without much success, I had to try something new. You might think, "here he goes again." But if you just peek out of that safety bubble you've created over the years and see the ground reality, you might understand my point.</p>
+          <p>We're living in times where polarization is at an all-time high, and it has become the most common political tool. The 2019 Pew Research Center's report showed that 68% of Indians view religious tensions as a "very big problem." The government you support doesn't care about Brahmins, Muslims, or any other religion — all it cares about is its votes.</p>
+          <p>Forming opinions that fit neatly into the image of our simple, neat little world while rejecting everything else isn't a strength — it's a weakness. I've tried so many times to show you that the ruling government is far from the ideal you believe it to be. It's not about attacking anyone's beliefs, but recognizing that blindly following a party just because they speak for our community will come back to bite us — because if you look closely, you'll see just how quickly they turn anyone into an enemy when it benefits them.</p>
+          <p>During the Delhi riots in 2020, more than 50 people died. The violence was fueled by hate speeches from political leaders. Between 2015 and 2020, there were over 2,900 cases of communal violence reported across India. Who benefits from all this? Certainly not the common man just trying to live a peaceful life.</p>
+          <p>By turning communities against each other, the government ensures we're too busy fighting amongst ourselves to notice how they're playing us. The same trick that worked for two centuries during colonial rule.</p>
+          <p>I love my family, and I respect our traditions — but that doesn't mean I won't voice opinions that are uncomfortable or don't align with yours. With love and hope, Ratnesh Tiwari.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="series">
+  <div class="section-label">Content series — The Alliance, NSUT</div>
+  <div class="series-grid">
+
+    <div class="series-card">
+      <div class="series-name">Campus Choice Awards</div>
+      <div class="series-title">The exam lies we told ourselves</div>
+      <p class="series-body">A carousel series asking students peculiar questions with absurd multiple-choice answers about everyday campus life — exams, deadlines, canteen runs. Equal parts relatable and brutally honest.</p>
+      <blockquote>"PYQs will be enough." — They definitely weren't.</blockquote>
+      <a class="series-link" href="https://www.instagram.com/alliance_nsut/p/DTZnh_GD0jo/" target="_blank">View on Instagram →</a>
+    </div>
+
+    <div class="series-card">
+      <div class="series-name">Looks Like a Cinnamon Roll</div>
+      <div class="series-title">Demystifying the subjects that scare you</div>
+      <p class="series-body">A series breaking down college subjects by how intimidating they look versus what they actually are — written to make first-years feel less terrified and more prepared.</p>
+      <blockquote>"Chemistry looks innocent with its colorful test tubes and cute little equations, but it's the kind of subject that smiles while plotting your downfall."</blockquote>
+      <a class="series-link" href="https://www.instagram.com/alliance_nsut/p/DOIphltD1vy/" target="_blank">View on Instagram →</a>
+    </div>
+
+    <div class="series-card">
+      <div class="series-name">Stoic Survival Guide</div>
+      <div class="series-title">A philosophy student never asked for</div>
+      <p class="series-body">Applying stoic principles to the messiness of university life — friendships, expectations, failure, and the slow art of figuring out what actually matters.</p>
+      <blockquote>"When the many fade into the few, accept it calmly. What remains is not loss, but the circle that matters."</blockquote>
+      <a class="series-link" href="https://www.instagram.com/alliance_nsut/p/DNskCMNXlVV/" target="_blank">View on Instagram →</a>
+    </div>
+
+    <div class="series-card">
+      <div class="series-name">Campus Chronicles · Biweekly</div>
+      <div class="series-title">Reporting campus life with wit and zero mercy</div>
+      <p class="series-body">A fortnightly series covering everything worth noticing on campus — new stalls, events, controversies, and the general chaos of college life. Heavy on sarcasm, light on filter.</p>
+      <blockquote>"Among SC, Safal and Nescafé, who will win the hunger games?"</blockquote>
+      <a class="series-link" href="https://www.instagram.com/alliance_nsut/p/DNazo01vEhc/" target="_blank">View on Instagram →</a>
+    </div>
+
+    <div class="series-card" style="grid-column: 1 / -1;">
+      <div class="series-name">Delhi Diaries · Monthly</div>
+      <div class="series-title">One place in Delhi, explored properly</div>
+      <p class="series-body">A monthly series where we pick one place in Delhi, actually go there, and write about it — not as a tourist but as someone trying to understand what makes the city what it is. From art districts to forgotten neighbourhoods.</p>
+      <blockquote>"Walking through its streets feels like browsing through a sketchbook, where each artwork narrates its own story through vibrant colours and thoughtful strokes."</blockquote>
+      <a class="series-link" href="https://www.instagram.com/alliance_nsut/p/DKGugRGTk5B/" target="_blank">View on Instagram →</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="contact-section" id="contact">
+  <div class="section-label">Get in touch</div>
+  <p>I'm currently looking for content writing, PR, or Founder's Office internships. If something here resonated, I'd love to hear from you.</p>
+  <div class="contact-links">
+    <a href="mailto:ratnesh.tiwari.ug24@gmail.com" class="contact-link primary">ratnesh.tiwari.ug24@gmail.com</a>
+    <a href="https://linkedin.com/in/ratnesh-tiwari57" class="contact-link" target="_blank">LinkedIn</a>
+    <a href="https://github.com/ratneshug24-netizen" class="contact-link" target="_blank">GitHub</a>
+  </div>
+</div>
+
+<script>
+function toggleArticle(btn) {
+  const hidden = btn.nextElementSibling;
+  const isOpen = hidden.classList.contains('open');
+  hidden.classList.toggle('open');
+  btn.textContent = isOpen ? btn.textContent.replace('Collapse ↑', btn.dataset.label || 'Read →') : 'Collapse ↑';
+  if (!btn.dataset.label) btn.dataset.label = isOpen ? btn.textContent : btn.textContent;
+}
+</script>
+</body>
+</html>
